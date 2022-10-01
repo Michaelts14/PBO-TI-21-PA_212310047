@@ -1,55 +1,90 @@
-import java.util.Scanner;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.awt.EventQueue;
 
-public class Latihan04 {
-    
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        LocalDateTime waktuSekarang = LocalDateTime.now();
-        DateTimeFormatter formatWaktu = DateTimeFormatter.ofPattern("dd MMM yyyy (HH:mm)");
-        String waktu = waktuSekarang.format(formatWaktu);
-        
-        double hargaRoti = 6300;
-        double jumlahBeli;
-        double totalHarga;
-        double diskon;
-        double subTotal;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-        for (int i=1; i<=80; i++)
-    	System.out.print("=");
-        System.out.println("\n\t\t\t\tTOKO SERBAGUNA IBIK");
-	    for (int i=1; i<=80; i++)
-		System.out.print("=");	   
-       
-        System.out.print("\nMasukkan jumlah produk yang dibeli = ");
-        
-        jumlahBeli = input.nextInt();
-        totalHarga = hargaRoti * jumlahBeli;
+public class Latihan04 extends JFrame {
 
-        System.out.print("\n");
+	private JPanel contentPane;
+	private JTextField tfHasil;
+	private JTextField tfangka;
 
-        System.out.println(waktu);
-        System.out.println("\nITEM \t\tQTY \t\tHARGA \t\tTOTAL");
-        for (int i=1; i<=80; i++)
-        	System.out.print("=");
-        System.out.println("\nROTI ENAK. \t" + jumlahBeli + "\t\tRp " + hargaRoti + "\tRp " + totalHarga);
-        for (int i=1; i<=80; i++)
-        	System.out.print("-");
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Latihan04 frame = new Latihan04();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
-        if(jumlahBeli % 3 == 0) {
-            diskon = 0.05 * totalHarga;
-            subTotal = totalHarga - diskon;
-            System.out.println("Diskon: 5%");
-        } else {
-            diskon = 0.1 * totalHarga;
-            subTotal = totalHarga - diskon;
-            System.out.println("\nDiskon: 10%");
-        }
+	/**
+	 * Create the frame.
+	 */
+	public Latihan04() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-        System.out.println("Sub Total = Rp. " + subTotal);
-
-        input.close();
-    }
-
-}
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lbNF = new JLabel("Nilai Faktorisasi");
+		lbNF.setBounds(160, 10, 115, 25);
+		lbNF.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 18));
+		contentPane.add(lbNF);
+		
+		tfHasil = new JTextField();
+		tfHasil.setBounds(10, 120, 416, 132);
+		contentPane.add(tfHasil);
+		tfHasil.setColumns(10);
+		
+		JLabel lbMA = new JLabel("Masukan Angka    = ");
+		lbMA.setBounds(10, 65, 123, 14);
+		contentPane.add(lbMA);
+		
+		tfangka = new JTextField();
+		tfangka.setColumns(10);
+		tfangka.setBounds(135, 62, 65, 20);
+		contentPane.add(tfangka);
+		
+		JButton btnH = new JButton("Hitung");
+		btnH.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int angka = Integer.parseInt(tfangka.getText());
+				String result = "Hasil Faktorisasi dari "+angka+" =";
+				
+				for (int i = angka; i>0; i--) {
+					if (angka%i == 0) {
+						String koma = (i>1)?",":".";
+						result += " "+i+koma;
+					}
+				}
+				tfHasil.setText(result);
+			}
+		});
+		btnH.setBounds(134, 91, 82, 18);
+		contentPane.add(btnH);
+		
+		JLabel lbWarning = new JLabel("");
+		lbWarning.setBounds(197, 65, 229, 14);
+		contentPane.add(lbWarning);
+	
+	}
+}kw

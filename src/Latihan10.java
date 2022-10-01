@@ -1,62 +1,47 @@
 import java.util.Scanner;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class Latihan10 {
-    
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        LocalDateTime waktuSekarang = LocalDateTime.now();
-        DateTimeFormatter formatWaktu = DateTimeFormatter.ofPattern("dd MMM yyyy (HH:mm)");
-        String waktu = waktuSekarang.format(formatWaktu);
-        
-        double hargaRoti = 6300;
-        double jumlahBeli;
-        double totalHarga;
-        double diskon;
-        double subTotal;
-
-        for (int i=1; i<=80; i++)
-    	System.out.print("=");
-        System.out.println("\n\t\t\t\tTOKO SERBAGUNA IBIK");
-	    for (int i=1; i<=80; i++)
-		System.out.print("=");	   
-       
-        System.out.print("\nMasukkan jumlah produk yang dibeli = ");
-        
-        jumlahBeli = input.nextInt();
-        totalHarga = hargaRoti * jumlahBeli;
-
-        System.out.print("\n");
-
-        System.out.println(waktu);
-        System.out.println("\nITEM \t\tQTY \t\tHARGA \t\tTOTAL");
-        for (int i=1; i<=80; i++)
-        	System.out.print("=");
-        System.out.println("\nROTI ENAK. \t" + jumlahBeli + "\t\tRp " + hargaRoti + "\tRp " + totalHarga);
-        for (int i=1; i<=80; i++)
-        	System.out.print("-");
-
-        if(jumlahBeli % 3 == 0) {
-            diskon = 0.05 * totalHarga;
-            subTotal = totalHarga - diskon;
-            System.out.println("Diskon: 5%");
-        } else {
-            diskon = 0.1 * totalHarga;
-            subTotal = totalHarga - diskon;
-            System.out.println("\nDiskon: 10%");
-        }
-      
-        System.out.println("Sub Total = Rp. " + subTotal);
-        System.out.println("  ");
-		System.out.print("Member Name :");
+	public static void main(String[] args) {
+		int pin,saldo = 100000000,setor,tarik;
+		String jwb = "";
+		Scanner input = new Scanner(System.in);
+		Scanner input_jwb = new Scanner(System.in);
 		
-    }
-    class Students {
-    	
-    	String getFullname(String Fullname) {
-    		System.out.println(Fullname);
-    		return Fullname;
-    	}
-    }
+		do {
+			System.out.print("Masukkan PIN = ");
+			pin = input.nextInt(); 
+		}while(pin != 212310047);
+		
+		do {
+			System.out.println("Masukkan Menu");
+			System.out.println("1. Lihat Saldo");
+			System.out.println("2. Setor Tunai");
+			System.out.println("3. Tarik Tunai");
+			System.out.println("4. Keluar");
+			System.out.print("Masukkan Pilihan = ");
+			int pil = input.nextInt();
+			
+			if (pil == 1) {
+				System.out.println(saldo);
+			}else if (pil == 2) {
+				System.out.print("Masukkan Nominal Setor Tunai = ");
+				setor = input.nextInt();
+				System.out.println("Saldo Anda saat ini = " + (saldo + setor));
+			}else if (pil == 3) {
+				System.out.print("Masukkan Nominal Tarik Tunai = ");
+				tarik = input.nextInt();
+				input.close();
+				if (tarik > saldo) {
+					System.out.println("Saldo tidak cukup");
+				}else {
+					System.out.println("Saldo Anda saat ini = " + (saldo - tarik));
+				}
+			}else if (pil == 4) {
+				System.out.print("Apakah Anda ingin keluar aplikasi ? (Y/N) = ");
+				jwb = input_jwb.nextLine();
+			}else {
+				System.out.println("Anda salah memasukkan menu");
+			}
+		}while(jwb.equals("N"));
+	}
 }
