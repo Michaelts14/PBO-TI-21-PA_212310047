@@ -1,47 +1,59 @@
 import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 public class Latihan10 {
 	public static void main(String[] args) {
-		int pin,saldo = 100000000,setor,tarik;
-		String jwb = "";
+		Students myName = new Students();
+		
+		int jml,total_harga,harga_satuan = 6300;
+		double diskon = 0,total_bayar = 0;
+		
+        DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+        
+        formatRp.setCurrencySymbol("Rp");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+		
+		System.out.println("==============================================");
+		System.out.println("          TOKO SERBAGUNA IBIK           ");
+		System.out.println("==============================================");
+		System.out.print("Masukkan jumlah produk yang dibeli : ");
 		Scanner input = new Scanner(System.in);
-		Scanner input_jwb = new Scanner(System.in);
+		jml = input.nextInt();
+		input.close();
 		
-		do {
-			System.out.print("Masukkan PIN = ");
-			pin = input.nextInt(); 
-		}while(pin != 212310047);
+		LocalDateTime myDateObj = LocalDateTime.now();
+	    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+	    String formattedDate = myDateObj.format(myFormatObj);
+	    System.out.println(formattedDate);
 		
-		do {
-			System.out.println("Masukkan Menu");
-			System.out.println("1. Lihat Saldo");
-			System.out.println("2. Setor Tunai");
-			System.out.println("3. Tarik Tunai");
-			System.out.println("4. Keluar");
-			System.out.print("Masukkan Pilihan = ");
-			int pil = input.nextInt();
-			
-			if (pil == 1) {
-				System.out.println(saldo);
-			}else if (pil == 2) {
-				System.out.print("Masukkan Nominal Setor Tunai = ");
-				setor = input.nextInt();
-				System.out.println("Saldo Anda saat ini = " + (saldo + setor));
-			}else if (pil == 3) {
-				System.out.print("Masukkan Nominal Tarik Tunai = ");
-				tarik = input.nextInt();
-				input.close();
-				if (tarik > saldo) {
-					System.out.println("Saldo tidak cukup");
-				}else {
-					System.out.println("Saldo Anda saat ini = " + (saldo - tarik));
-				}
-			}else if (pil == 4) {
-				System.out.print("Apakah Anda ingin keluar aplikasi ? (Y/N) = ");
-				jwb = input_jwb.nextLine();
-			}else {
-				System.out.println("Anda salah memasukkan menu");
-			}
-		}while(jwb.equals("N"));
+		System.out.println();
+		
+		total_harga = jml * 6300;
+		
+		System.out.println("ITEM               QTY   HARGA          TOTAL");
+		System.out.println("==============================================");
+		kursIndonesia.setDecimalFormatSymbols(formatRp);
+		System.out.printf("ROTI ENAK           " + jml + "    %s %n", kursIndonesia.format(harga_satuan) +   kursIndonesia.format(total_harga));
+		System.out.println("----------------------------------------------");
+		if(jml % 3 == 0) {
+			diskon = 0.05 * total_harga;
+			total_bayar = total_harga - diskon;
+			System.out.println("Diskon : 5%");
+		}else {
+			diskon = 0.010 * total_harga;
+			total_bayar = total_harga - diskon;
+			System.out.println("Diskon : 10%");
+		}
+		
+		kursIndonesia.setDecimalFormatSymbols(formatRp);
+	    System.out.printf("Sub Total: %s %n", kursIndonesia.format(total_bayar));
+	    System.out.println("Member Name : " + myName.getFullName("Angga Putra"));
 	}
 }

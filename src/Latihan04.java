@@ -1,90 +1,56 @@
-import java.awt.EventQueue;
+import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
-public class Latihan04 extends JFrame {
-
-	private JPanel contentPane;
-	private JTextField tfHasil;
-	private JTextField tfangka;
-
-	/**
-	 * Launch the application.
-	 */
+public class Latihan04 {
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Latihan04 frame = new Latihan04();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+		int jml,total_harga,harga_satuan = 6300;
+		double diskon = 0,total_bayar = 0;
+		
+        DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+        
+        formatRp.setCurrencySymbol("Rp");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+		
+		System.out.println("==============================================");
+		System.out.println("          TOKO SERBAGUNA IBIK           ");
+		System.out.println("==============================================");
+		System.out.print("Masukkan jumlah produk yang dibeli : ");
+		Scanner input = new Scanner(System.in);
+		jml = input.nextInt();
+		input.close();
+		
+		LocalDateTime myDateObj = LocalDateTime.now();
+	    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-	/**
-	 * Create the frame.
-	 */
-	public Latihan04() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+	    String formattedDate = myDateObj.format(myFormatObj);
+	    System.out.println(formattedDate);
 		
-		JLabel lbNF = new JLabel("Nilai Faktorisasi");
-		lbNF.setBounds(160, 10, 115, 25);
-		lbNF.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 18));
-		contentPane.add(lbNF);
+		System.out.println();
 		
-		tfHasil = new JTextField();
-		tfHasil.setBounds(10, 120, 416, 132);
-		contentPane.add(tfHasil);
-		tfHasil.setColumns(10);
+		total_harga = jml * 6300;
 		
-		JLabel lbMA = new JLabel("Masukan Angka    = ");
-		lbMA.setBounds(10, 65, 123, 14);
-		contentPane.add(lbMA);
+		System.out.println("ITEM               QTY   HARGA          TOTAL");
+		System.out.println("==============================================");
+		kursIndonesia.setDecimalFormatSymbols(formatRp);
+		System.out.printf("ROTI ENAK           " + jml + "    %s %n", kursIndonesia.format(harga_satuan) + "   " + kursIndonesia.format(total_harga));
+		System.out.println("----------------------------------------------");
+		if(jml % 3 == 0) {
+			diskon = 0.05 * total_harga;
+			total_bayar = total_harga - diskon;
+			System.out.println("Diskon : 5%");
+		}else {
+			diskon = 0.010 * total_harga;
+			total_bayar = total_harga - diskon;
+			System.out.println("Diskon : 10%");
+		}
 		
-		tfangka = new JTextField();
-		tfangka.setColumns(10);
-		tfangka.setBounds(135, 62, 65, 20);
-		contentPane.add(tfangka);
-		
-		JButton btnH = new JButton("Hitung");
-		btnH.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				int angka = Integer.parseInt(tfangka.getText());
-				String result = "Hasil Faktorisasi dari "+angka+" =";
-				
-				for (int i = angka; i>0; i--) {
-					if (angka%i == 0) {
-						String koma = (i>1)?",":".";
-						result += " "+i+koma;
-					}
-				}
-				tfHasil.setText(result);
-			}
-		});
-		btnH.setBounds(134, 91, 82, 18);
-		contentPane.add(btnH);
-		
-		JLabel lbWarning = new JLabel("");
-		lbWarning.setBounds(197, 65, 229, 14);
-		contentPane.add(lbWarning);
-	
+		kursIndonesia.setDecimalFormatSymbols(formatRp);
+	    System.out.printf("Sub Total: %s %n", kursIndonesia.format(total_bayar));
 	}
-}kw
+}
